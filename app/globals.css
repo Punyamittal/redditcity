@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #020617;
+  --foreground: #f8fafc;
+  --neon-cyan: #00f2fe;
+  --neon-magenta: #ff00ff;
+  --neon-purple: #9b4dff;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+  overflow-x: hidden;
+}
+
+@layer components {
+  .glass {
+    background: rgba(30, 41, 59, 0.5);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .neon-glow {
+    box-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
+  }
+
+  .neon-text {
+    text-shadow: 0 0 8px rgba(0, 242, 254, 0.6);
+  }
+}
+
+@layer utilities {
+  .isometric {
+    transform: rotateX(60deg) rotateZ(-45deg);
+    transform-style: preserve-3d;
+  }
+}
