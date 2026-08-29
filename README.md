@@ -126,70 +126,79 @@ High-level system design, data flows, API map, and workflow pipelines derived fr
 ```mermaid
 graph TB
     subgraph Client["Client Layer"]
-        user["User / Operator"]
-        api_client["API / CLI Client"]
+        user["User"]
+        browser["Browser / Client"]
     end
 
-    subgraph Core["app/ — Application Core"]
+    subgraph Core["Redditcity — Web App"]
+        page_tsx["Page.Tsx<br/>/page.tsx"]
+        profile__username_["Profile/[Username]<br/>/profile/[username]"]
     end
 
     subgraph Data["Data & Artifacts"]
-        datasets["Datasets · JSON · CSV"]
+        assets["Static assets · public/"]
+        config["Config · env / JSON"]
     end
 
-    subgraph Charts["Metrics & Dashboard Charts"]
-        page_views["Page views chart"]
-        nav_sections["Navigation sections map"]
-        project_showcase["Project showcase grid"]
-        skills_timeline["Skills & experience timeline"]
-        contact_funnel["Contact conversion funnel"]
-        media_gallery["Media & assets gallery"]
+    subgraph Charts["redditcity — Metrics & Views"]
+        page_tsx["Page.Tsx page"]
+        profile__username_["Profile/[Username] page"]
+        api["api/ module"]
+        components["components/ module"]
+        docs["docs/ module"]
+        lib["lib/ module"]
     end
 
-    user --> api_client
-    api_client --> Core
-    user -->|Web UI| dashboard_kpis
-    Core --> page_views
-    page_views --> user
+    user --> browser
+    browser --> page_tsx
+    page_tsx --> user
 ```
 
 ### Data Flow & Charts Pipeline
 
 ```mermaid
 flowchart LR
-    U["User / Event"] --> IN["Untrusted Input"]
+    U["User / Event"] --> IN["User Action"]
 
-    subgraph Pipeline["Processing Pipeline"]
-        p0["Input"]
-        p1["Processing"]
-        p2["Output"]
+    subgraph Pipeline["redditcity App Flow"]
+        p0["Page.Tsx"]
+        p1["Profile/[Username]"]
+        p2["Api"]
+        p3["Docs"]
+        p4["Lib"]
+        p5["Models"]
         p0 --> p1
         p1 --> p2
+        p2 --> p3
+        p3 --> p4
+        p4 --> p5
     end
 
-    subgraph Metrics["Metrics & Chart Feeds"]
-        page_views["Page views chart"]
-        nav_sections["Navigation sections map"]
-        project_showcase["Project showcase grid"]
-        skills_timeline["Skills & experience timeline"]
-        contact_funnel["Contact conversion funnel"]
-        media_gallery["Media & assets gallery"]
+    subgraph Metrics["redditcity — Views & Metrics"]
+        page_tsx["Page.Tsx page"]
+        profile__username_["Profile/[Username] page"]
+        api["api/ module"]
+        components["components/ module"]
+        docs["docs/ module"]
+        lib["lib/ module"]
     end
 
     IN --> p0
-    p2 --> OUT["Authorized Output"]
+    p5 --> OUT["UI Response"]
     OUT --> U
-    p2 --> page_views
-    page_views --> U
+    p5 --> page_tsx
+    page_tsx --> U
 ```
 
 ### Component & API Map
 
 ```mermaid
 graph LR
-    subgraph App["app Components"]
-        main["main<br/>Main"]
+    subgraph App["redditcity Components"]
+        page_tsx["Page.Tsx<br/>/page.tsx"]
+        profile__username_["Profile/[Username]<br/>/profile/[username]"]
     end
+    page_tsx --> profile__username_
 ```
 
 ### Application Page Map
@@ -210,4 +219,4 @@ Screenshots captured from the running application. Each page is listed with its 
 
 Application page at `/`
 
-![Home](docs/readme-agent/pages/dashboard.png)
+![Home](docs/readme-agent/pages/home.png)
